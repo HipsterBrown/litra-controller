@@ -1,0 +1,31 @@
+{
+  "name": "litra-controller",
+  "version": "0.1.0",
+  "description": "A library and CLI for controlling the Logitech Litra Glow lightbox",
+  "main": "index.mjs",
+  "module": "index.mjs",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "bin": {
+    "litra": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "logitech",
+    "hid",
+    "litra",
+    "glow"
+  ],
+  "author": "HipsterBrown <headhipster@hipsterbrown.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-hid": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "18.8.0",
+    "@types/node-hid": "^1.3.1"
+  }
+}
