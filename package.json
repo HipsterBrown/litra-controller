@@ -1,6 +1,6 @@
 {
   "name": "litra-controller",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A library and CLI for controlling the Logitech Litra Glow lightbox",
   "main": "index.mjs",
   "module": "index.mjs",
