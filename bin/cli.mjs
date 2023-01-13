@@ -45,25 +45,38 @@ const glow = new LitraController()
 
 if (values.info || positionals.includes('info')) {
   const info = glow.getInfo()
-  console.table(info)
+  if (info) {
+    console.table(info)
+  } else {
+    console.warn('Device is currently unavailable')
+  }
   process.exit(0)
 }
 
 if (values.on || positionals.includes('on')) {
-  glow.on();
-  console.log(`Let there be light!`)
+  if (glow.on()) {
+    console.log(`Let there be light!`)
+  } else {
+    console.warn('Device is currently unavailable')
+  }
 }
 
 if (values.off || positionals.includes('off')) {
-  glow.off()
-  console.log(`Nothing to see here.`)
+  if (glow.off()) {
+    console.log(`Nothing to see here.`)
+  } else {
+    console.warn('Device is currently unavailable')
+  }
 }
 
 if (values.brightness) {
   const level = parseInt(values.brightness, 10)
   if (level >= 0 || level <= 100) {
-    glow.setBrightness(level)
-    console.log(`Brightness set to ${level}%`)
+    if (glow.setBrightness(level)) {
+      console.log(`Brightness set to ${level}%`)
+    } else {
+      console.warn('Device is currently unavailable')
+    }
   } else {
     console.error('Brightness level must be between 0 and 100')
     process.exit(1)
@@ -73,8 +86,11 @@ if (values.brightness) {
 if (values.temp) {
   const temp = parseInt(values.temp, 10)
   if (temp >= TEMP_MIN || temp <= TEMP_MAX) {
-    glow.setTemperature(temp)
-    console.log(`Temperature set to ${temp}K`)
+    if (glow.setTemperature(temp)) {
+      console.log(`Temperature set to ${temp}K`)
+    } else {
+      console.warn('Device is currently unavailable')
+    }
   } else {
     console.error(`Temperature setting must be between ${TEMP_MIN} and ${TEMP_MAX}`)
     process.exit(1)

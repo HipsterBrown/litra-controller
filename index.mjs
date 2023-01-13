@@ -17,24 +17,43 @@ export class LitraController {
   #device;
 
   constructor() {
-    this.#device = new HID(VENDOR_ID, PID_GLOW)
+    this.connect()
   }
 
   getInfo() {
-    return this.#device.getDeviceInfo()
+    return this.#device?.getDeviceInfo()
   }
 
   on() {
-    this.#device.write(ENTRY_BYTES.concat(POWER_BYTES, [LIGHT_ON], new Array(15).fill(0)))
+    return this.#write(ENTRY_BYTES.concat(POWER_BYTES, [LIGHT_ON], new Array(15).fill(0)))
   }
 
   off() {
-    this.#device.write(ENTRY_BYTES.concat(POWER_BYTES, [LIGHT_OFF], new Array(15).fill(0)))
+    return this.#write(ENTRY_BYTES.concat(POWER_BYTES, [LIGHT_OFF], new Array(15).fill(0)))
+  }
+
+  close() {
+    this.#device?.close()
+    this.#device = null
+  }
+
+  connect() {
+    if (this.#device) return;
+
+    try {
+      this.#device = new HID(VENDOR_ID, PID_GLOW)
+    } catch (error) {
+      this.#device = null
+    }
+  }
+
+  get isConnected() {
+    return this.#device !== null
   }
 
   setBrightness(level) {
     const adjustedLevel = Math.floor(BRIGHTNESS_MIN + ((level / 100) * (BRIGHTNESS_MAX - BRIGHTNESS_MIN)))
-    this.#device.write(ENTRY_BYTES.concat(BRIGHTNESS_BYTES, [adjustedLevel], new Array(14).fill(0)))
+    return this.#write(ENTRY_BYTES.concat(BRIGHTNESS_BYTES, [adjustedLevel], new Array(14).fill(0)))
   }
 
   setTemperature(temp) {
@@ -43,7 +62,14 @@ export class LitraController {
     const temp1 = parseInt(adjustedTemp.slice(0, 2), 16)
     const temp2 = parseInt(adjustedTemp.slice(2), 16)
 
-    this.#device.write(ENTRY_BYTES.concat(TEMP_BYTES, [temp1, temp2], new Array(14).fill(0)))
+    return this.#write(ENTRY_BYTES.concat(TEMP_BYTES, [temp1, temp2], new Array(14).fill(0)))
+  }
 
+  #write(bytes) {
+    if (this.#device) {
+      this.#device.write(bytes)
+      return true
+    }
+    return false
   }
 }
