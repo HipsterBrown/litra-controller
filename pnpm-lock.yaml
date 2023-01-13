@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@auto-it/all-contributors': ^10.37.6
   '@auto-it/conventional-commits': ^10.37.6
+  '@tsconfig/node-lts-strictest-esm': ^18.12.1
   '@types/node': 18.8.0
   '@types/node-hid': ^1.3.1
   auto: ^10.37.6
@@ -15,6 +16,7 @@ dependencies:
 devDependencies:
   '@auto-it/all-contributors': 10.37.6_7qrv2x47umymgjjwcryhh45ppy
   '@auto-it/conventional-commits': 10.37.6_7qrv2x47umymgjjwcryhh45ppy
+  '@tsconfig/node-lts-strictest-esm': 18.12.1
   '@types/node': 18.8.0
   '@types/node-hid': 1.3.1
   auto: 10.37.6_7qrv2x47umymgjjwcryhh45ppy
@@ -419,6 +421,10 @@ packages:
     resolution: {integrity: sha512-eJ2jbzjdijiL3B4PrSQaSjuF2sPEQPVCPzBvTHJD9Nz+9dw2SGH4K4xeQJ77YfTq5bRQ+bD8wT11JbeDPmxmGg==}
     dependencies:
       '@octokit/openapi-types': 12.11.0
+    dev: true
+
+  /@tsconfig/node-lts-strictest-esm/18.12.1:
+    resolution: {integrity: sha512-LvBLmaC6Q/txTddLc11OeMHF9XjJFzlilkETJuvBlUvHy9pPiMsoH3nxWZM1FMSO53zp4mJP6gzOzxKEq0me7Q==}
     dev: true
 
   /@tsconfig/node10/1.0.9:

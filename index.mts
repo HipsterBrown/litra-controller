@@ -13,14 +13,21 @@ const POWER_BYTES = [0x1c]
 const BRIGHTNESS_BYTES = [0x4c, 0x00]
 const TEMP_BYTES = [0x9c]
 
+export type DeviceInfo = {
+  manufacturer: string;
+  product: string;
+  serialNumber: string;
+}
+
 export class LitraController {
-  #device;
+  #device: HID | null = null;
 
   constructor() {
     this.connect()
   }
 
-  getInfo() {
+  getInfo(): DeviceInfo | undefined {
+    // @ts-expect-error out of date types for node-hid
     return this.#device?.getDeviceInfo()
   }
 
@@ -51,12 +58,12 @@ export class LitraController {
     return this.#device !== null
   }
 
-  setBrightness(level) {
+  setBrightness(level: number) {
     const adjustedLevel = Math.floor(BRIGHTNESS_MIN + ((level / 100) * (BRIGHTNESS_MAX - BRIGHTNESS_MIN)))
     return this.#write(ENTRY_BYTES.concat(BRIGHTNESS_BYTES, [adjustedLevel], new Array(14).fill(0)))
   }
 
-  setTemperature(temp) {
+  setTemperature(temp: number) {
     const adjustedTemp = temp.toString(16).padStart(4, '0').toUpperCase()
 
     const temp1 = parseInt(adjustedTemp.slice(0, 2), 16)
@@ -65,7 +72,7 @@ export class LitraController {
     return this.#write(ENTRY_BYTES.concat(TEMP_BYTES, [temp1, temp2], new Array(14).fill(0)))
   }
 
-  #write(bytes) {
+  #write(bytes: number[] | Buffer) {
     if (this.#device) {
       this.#device.write(bytes)
       return true

@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util'
-import { LitraController, TEMP_MAX, TEMP_MIN } from '../index.mjs'
+import { LitraController, TEMP_MAX, TEMP_MIN } from '../dist/index.mjs'
 
 const options = {
   help: {
